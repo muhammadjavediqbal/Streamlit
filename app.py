@@ -32,7 +32,7 @@ def train_model(dataset_path):
     model = RandomForestRegressor(random_state=42)
     model.fit(X_train, y_train)
     test_score = model.score(X_test, y_test)
-    st.write(f'Test Score: {test_score}')
+    #st.write(f'Test Score: {test_score}')
     return model
 
 # Function to generate keys and save them
