@@ -9,6 +9,8 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
+from load_data import data
+
 
 # Initialize global variables for public and private keys
 public_key, private_key = None, None
@@ -26,6 +28,7 @@ def train_model(dataset_path):
     X = df.drop('salary', axis=1)  # Replace with your features
     X_processed = preprocess_data(X)
     X_train, X_test, y_train, y_test = train_test_split(X_processed, y, test_size=0.2, random_state=42)
+    model= data()
     model = RandomForestRegressor(random_state=42)
     model.fit(X_train, y_train)
     test_score = model.score(X_test, y_test)
@@ -76,10 +79,10 @@ st.header('Data Prediction')
 st.markdown('Enter the data you want to predict on using the trained model.')
 
 # Assuming there are four features to input
-feature_1 = st.number_input('Enter feature 1:', value=1.0)
-feature_2 = st.number_input('Enter feature 2:', value=2.0)
-feature_3 = st.number_input('Enter feature 3:', value=3.0)
-feature_4 = st.number_input('Enter feature 4:', value=4.0)
+feature_1 = st.number_input('Enter age:', value=1)
+feature_2 = st.number_input('Enter healthy_eating:', value=2)
+feature_3 = st.number_input('Enter active_lifestyle:', value=3)
+feature_4 = st.number_input('Enter Gender:', value=4)
 
 if st.button('Encrypt Data and Predict'):
     if 'public_key' in st.session_state and 'private_key' in st.session_state and 'model' in st.session_state:
