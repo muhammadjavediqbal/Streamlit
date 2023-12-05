@@ -79,10 +79,10 @@ st.header('Data Prediction')
 st.markdown('Enter the data you want to predict on using the trained model.')
 
 # Assuming there are four features to input
-feature_1 = st.number_input('Enter age:', value=1)
-feature_2 = st.number_input('Enter healthy_eating:', value=2)
-feature_3 = st.number_input('Enter active_lifestyle:', value=3)
-feature_4 = st.number_input('Enter Gender:', value=0)
+feature_1 = st.number_input('Enter age:', value=61)
+feature_2 = st.number_input('Enter healthy_eating:', value=8)
+feature_3 = st.number_input('Enter active_lifestyle:', value=1)
+feature_4 = st.number_input('Enter Gender:', value=1)
 
 if st.button('Encrypt Data and Predict'):
     if 'public_key' in st.session_state and 'private_key' in st.session_state and 'model' in st.session_state:
