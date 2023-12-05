@@ -1,4 +1,4 @@
-# streamlit_app.py
+
 
 import streamlit as st
 import pandas as pd
@@ -8,7 +8,7 @@ import json
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-import os
+
 
 # Initialize global variables for public and private keys
 public_key, private_key = None, None
@@ -65,7 +65,7 @@ with st.sidebar:
         st.code(f"p = {'*' * 10}")  # Masking private key
         st.code(f"q = {'*' * 10}")  # Masking private key
 
-    if st.button('Train RandomForest Model'):
+    if st.button('Train Model'):
         with st.spinner('Training in progress...'):
             model = train_model('employee_data.csv')  # Ensure the dataset path is correct
             st.session_state['model'] = model
@@ -73,7 +73,7 @@ with st.sidebar:
 
 # Main Page for Data Prediction
 st.header('Data Prediction')
-st.markdown('Enter the data you want to predict on using the trained RandomForest model.')
+st.markdown('Enter the data you want to predict on using the trained model.')
 
 # Assuming there are four features to input
 feature_1 = st.number_input('Enter feature 1:', value=1.0)
@@ -105,8 +105,4 @@ if st.button('Encrypt Data and Predict'):
     else:
         st.error('Please complete the setup steps first.')
 
-st.markdown("### Note:")
-st.info("Ensure that 'employee_data.csv' is in the same directory as this Streamlit application.")
 
-# Run the app with the following command in your terminal:
-# streamlit run streamlit_app.py
