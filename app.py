@@ -82,7 +82,7 @@ st.markdown('Enter the data you want to predict on using the trained model.')
 feature_1 = st.number_input('Enter age:', value=1)
 feature_2 = st.number_input('Enter healthy_eating:', value=2)
 feature_3 = st.number_input('Enter active_lifestyle:', value=3)
-feature_4 = st.number_input('Enter Gender:', value=4)
+feature_4 = st.number_input('Enter Gender:', value=0)
 
 if st.button('Encrypt Data and Predict'):
     if 'public_key' in st.session_state and 'private_key' in st.session_state and 'model' in st.session_state:
