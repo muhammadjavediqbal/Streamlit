@@ -22,4 +22,4 @@ import time
 #     return model
 
 def data():
-    time.sleep(100)
+    time.sleep(30)
