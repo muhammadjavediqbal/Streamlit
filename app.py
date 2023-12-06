@@ -14,6 +14,8 @@ from load_data import data
 
 # Initialize global variables for public and private keys
 public_key, private_key = None, None
+if 'predictions' not in st.session_state:
+    st.session_state.predictions = []
 
 # Function to preprocess data
 def preprocess_data(X):
@@ -104,14 +106,14 @@ if st.button('Encrypt Data and Predict'):
                 st.success('Prediction successful!')
                 st.write(f'Predicted Value: {prediction[0]}')
                 # Append the prediction to the list
-                predictions.append({'Feature 1': feature_1,
-                                    'Feature 2': feature_2,
-                                    'Feature 3': feature_3,
-                                    'Feature 4': feature_4,
-                                    'Prediction': prediction[0]})
+                st.session_state.predictions.append({'Feature 1': feature_1,
+                                                     'Feature 2': feature_2,
+                                                     'Feature 3': feature_3,
+                                                     'Feature 4': feature_4,
+                                                     'Prediction': prediction[0]})
 
                 # Save to CSV
-                predictions_df = pd.DataFrame(predictions)
+                predictions_df = pd.DataFrame(st.session_state.predictions)
                 predictions_df.to_csv('predictions.csv', index=False)
                 st.success('Predictions saved to predictions.csv')
 
