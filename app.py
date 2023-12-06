@@ -11,6 +11,11 @@ from sklearn.preprocessing import StandardScaler
 
 from load_data import data
 
+def convert_df_to_csv_download_link(df):
+    csv = df.to_csv(index=False).encode('utf-8-sig')
+    b64 = base64.b64encode(csv).decode()
+    href = f'<a href="data:file/csv;base64,{b64}" download="predictions.csv" target="_blank">Download predictions.csv</a>'
+    return href
 
 # Initialize global variables for public and private keys
 public_key, private_key = None, None
@@ -112,10 +117,9 @@ if st.button('Encrypt Data and Predict'):
                                                      'Feature 4': feature_4,
                                                      'Prediction': prediction[0]})
 
-                # Save to CSV
                 predictions_df = pd.DataFrame(st.session_state.predictions)
-                predictions_df.to_csv('predictions.csv', index=False)
                 st.success('Predictions saved to predictions.csv')
+                st.markdown(convert_df_to_csv_download_link(predictions_df), unsafe_allow_html=True)
 
             except Exception as e:
                 st.error(f'An error occurred: {e}')
