@@ -103,6 +103,18 @@ if st.button('Encrypt Data and Predict'):
                 prediction = st.session_state['model'].predict(decrypted_data)
                 st.success('Prediction successful!')
                 st.write(f'Predicted Value: {prediction[0]}')
+                # Append the prediction to the list
+                predictions.append({'Feature 1': feature_1,
+                                    'Feature 2': feature_2,
+                                    'Feature 3': feature_3,
+                                    'Feature 4': feature_4,
+                                    'Prediction': prediction[0]})
+
+                # Save to CSV
+                predictions_df = pd.DataFrame(predictions)
+                predictions_df.to_csv('predictions.csv', index=False)
+                st.success('Predictions saved to predictions.csv')
+
             except Exception as e:
                 st.error(f'An error occurred: {e}')
     else:
