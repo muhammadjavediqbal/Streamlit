@@ -1,5 +1,3 @@
-
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -8,19 +6,6 @@ import json
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-
-from load_data import data
-
-# def convert_df_to_csv_download_link(df):
-#     csv = df.to_csv(index=False).encode('utf-8-sig')
-#     b64 = base64.b64encode(csv).decode()
-#     href = f'<a href="data:file/csv;base64,{b64}" download="predictions.csv" target="_blank">Download predictions.csv</a>'
-#     return href
-
-# Initialize global variables for public and private keys
-public_key, private_key = None, None
-if 'predictions' not in st.session_state:
-    st.session_state.predictions = []
 
 # Function to preprocess data
 def preprocess_data(X):
@@ -35,11 +20,11 @@ def train_model(dataset_path):
     X = df.drop('salary', axis=1)  # Replace with your features
     X_processed = preprocess_data(X)
     X_train, X_test, y_train, y_test = train_test_split(X_processed, y, test_size=0.2, random_state=42)
-    model= data()
+
     model = RandomForestRegressor(random_state=42)
     model.fit(X_train, y_train)
     test_score = model.score(X_test, y_test)
-    #st.write(f'Test Score: {test_score}')
+    st.write(f'Test Score: {test_score}')
     return model
 
 # Function to generate keys and save them
@@ -103,27 +88,20 @@ if st.button('Encrypt Data and Predict'):
                 # Prepare the data for prediction
                 data = np.array([[feature_1, feature_2, feature_3, feature_4]])
                 data_processed = preprocess_data(data)  # Preprocess the data
-                # Encrypt and decrypt the processed data
+                # Debug: Print the processed data
+                st.write("Processed data for prediction:", data_processed)
+                
                 encrypted_data = [public_key.encrypt(x) for x in data_processed.flatten()]
                 decrypted_data = np.array([private_key.decrypt(x) for x in encrypted_data]).reshape(data_processed.shape)
-                # Predict
+                
+                # Debug: Print the decrypted data
+                st.write("Decrypted data for prediction:", decrypted_data)
+
                 prediction = st.session_state['model'].predict(decrypted_data)
                 st.success('Prediction successful!')
                 st.write(f'Predicted Value: {prediction[0]}')
-                # Append the prediction to the list
-                # st.session_state.predictions.append({'Feature 1': feature_1,
-                #                                      'Feature 2': feature_2,
-                #                                      'Feature 3': feature_3,
-                #                                      'Feature 4': feature_4,
-                #                                      'Prediction': prediction[0]})
-
-                # predictions_df = pd.DataFrame(st.session_state.predictions)
-                # st.success('Predictions saved to predictions.csv')
-                # st.markdown(convert_df_to_csv_download_link(predictions_df), unsafe_allow_html=True)
-
+            
             except Exception as e:
                 st.error(f'An error occurred: {e}')
     else:
         st.error('Please complete the setup steps first.')
-
-
