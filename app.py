@@ -11,11 +11,11 @@ from sklearn.preprocessing import StandardScaler
 
 from load_data import data
 
-def convert_df_to_csv_download_link(df):
-    csv = df.to_csv(index=False).encode('utf-8-sig')
-    b64 = base64.b64encode(csv).decode()
-    href = f'<a href="data:file/csv;base64,{b64}" download="predictions.csv" target="_blank">Download predictions.csv</a>'
-    return href
+# def convert_df_to_csv_download_link(df):
+#     csv = df.to_csv(index=False).encode('utf-8-sig')
+#     b64 = base64.b64encode(csv).decode()
+#     href = f'<a href="data:file/csv;base64,{b64}" download="predictions.csv" target="_blank">Download predictions.csv</a>'
+#     return href
 
 # Initialize global variables for public and private keys
 public_key, private_key = None, None
@@ -111,15 +111,15 @@ if st.button('Encrypt Data and Predict'):
                 st.success('Prediction successful!')
                 st.write(f'Predicted Value: {prediction[0]}')
                 # Append the prediction to the list
-                st.session_state.predictions.append({'Feature 1': feature_1,
-                                                     'Feature 2': feature_2,
-                                                     'Feature 3': feature_3,
-                                                     'Feature 4': feature_4,
-                                                     'Prediction': prediction[0]})
+                # st.session_state.predictions.append({'Feature 1': feature_1,
+                #                                      'Feature 2': feature_2,
+                #                                      'Feature 3': feature_3,
+                #                                      'Feature 4': feature_4,
+                #                                      'Prediction': prediction[0]})
 
-                predictions_df = pd.DataFrame(st.session_state.predictions)
-                st.success('Predictions saved to predictions.csv')
-                st.markdown(convert_df_to_csv_download_link(predictions_df), unsafe_allow_html=True)
+                # predictions_df = pd.DataFrame(st.session_state.predictions)
+                # st.success('Predictions saved to predictions.csv')
+                # st.markdown(convert_df_to_csv_download_link(predictions_df), unsafe_allow_html=True)
 
             except Exception as e:
                 st.error(f'An error occurred: {e}')
