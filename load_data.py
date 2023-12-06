@@ -136,4 +136,4 @@ def train_model(dataset_path):
 
 
 def data():
-    time.sleep(10)
+    time.sleep(1500)
