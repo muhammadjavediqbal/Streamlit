@@ -20,7 +20,7 @@ def train_model(dataset_path):
     y = df['salary']  # Replace with your target variable
     X = df.drop('salary', axis=1)  # Replace with your features
     X_processed = preprocess_data(X)
-    data=data()
+    
     X_train, X_test, y_train, y_test = train_test_split(X_processed, y, test_size=0.2, random_state=42)
 
     model = RandomForestRegressor(random_state=42)
