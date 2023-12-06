@@ -4,9 +4,10 @@ import numpy as np
 from phe import paillier
 import json
 from sklearn.ensemble import RandomForestRegressor
-from load_data import data
+
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from load_data import data
 
 # Function to preprocess data
 def preprocess_data(X):
