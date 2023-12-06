@@ -4,10 +4,21 @@ import numpy as np
 from phe import paillier
 import json
 from sklearn.ensemble import RandomForestRegressor
-
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+
 from load_data import data
+
+# def convert_df_to_csv_download_link(df):
+#     csv = df.to_csv(index=False).encode('utf-8-sig')
+#     b64 = base64.b64encode(csv).decode()
+#     href = f'<a href="data:file/csv;base64,{b64}" download="predictions.csv" target="_blank">Download predictions.csv</a>'
+#     return href
+
+# Initialize global variables for public and private keys
+public_key, private_key = None, None
+if 'predictions' not in st.session_state:
+    st.session_state.predictions = []
 
 # Function to preprocess data
 def preprocess_data(X):
@@ -21,13 +32,12 @@ def train_model(dataset_path):
     y = df['salary']  # Replace with your target variable
     X = df.drop('salary', axis=1)  # Replace with your features
     X_processed = preprocess_data(X)
-    
     X_train, X_test, y_train, y_test = train_test_split(X_processed, y, test_size=0.2, random_state=42)
-
+    model= data()
     model = RandomForestRegressor(random_state=42)
     model.fit(X_train, y_train)
     test_score = model.score(X_test, y_test)
-    st.write(f'Test Score: {test_score}')
+    #st.write(f'Test Score: {test_score}')
     return model
 
 # Function to generate keys and save them
@@ -91,19 +101,15 @@ if st.button('Encrypt Data and Predict'):
                 # Prepare the data for prediction
                 data = np.array([[feature_1, feature_2, feature_3, feature_4]])
                 data_processed = preprocess_data(data)  # Preprocess the data
-                # Debug: Print the processed data
-                st.write("Processed data for prediction:", data_processed)
-                
+                # Encrypt and decrypt the processed data
                 encrypted_data = [public_key.encrypt(x) for x in data_processed.flatten()]
                 decrypted_data = np.array([private_key.decrypt(x) for x in encrypted_data]).reshape(data_processed.shape)
-                
-                # Debug: Print the decrypted data
-                st.write("Decrypted data for prediction:", decrypted_data)
-
+                # Predict
                 prediction = st.session_state['model'].predict(decrypted_data)
                 st.success('Prediction successful!')
                 st.write(f'Predicted Value: {prediction[0]}')
             
+
             except Exception as e:
                 st.error(f'An error occurred: {e}')
     else:
